@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Care Tips</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">CalmConnect</a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                    <!-- Add more navigation links as needed -->
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </header>
+
+<section class="stretching-exercises">
+    <h1>Day 6: Stretch and Breathe</h1>
+    <p>Relax your body and mind with these simple stretching exercises. Hold each stretch for 20-30 seconds, and remember to breathe deeply.</p>
+
+    
+
+    <div class="exercise">
+        <h2>1. Neck Stretch</h2>
+        <p>Gently stretches the neck muscles to relieve tension and improve flexibility.</p>
+        <div class="video-container">
+        <video class="exercise-video" controls>
+            <source src="/static/images/neck.mp4" type="video/mp4">
+        </video>
+    </div>
+    </div>
+
+    <div class="exercise">
+        <h2>2. Body Stretch</h2>
+        <p> A full-body stretch that enhances flexibility and reduces muscle stiffness.</p>
+        <div class="video-container">
+        <video class="exercise-video" controls>
+            <source src="/static/images/body .mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+    <div class="exercise">
+        <h2>3. Child's Pose</h2>
+        <p>A relaxing yoga pose that stretches the back and hips while promoting relaxation.</p>
+        <div class="video-container">
+        <video class="exercise-video" controls>
+            <source src="/static/images/child pose.mp4" type="video/mp4">
+        </video>
+    </div>
+    </div>
+
+    <div class="exercise">
+        <h2>4. Lunge Twist</h2>
+        <p>A dynamic stretch that targets the hips, glutes, and spine, improving mobility and balance.</p>
+        <div class="video-container">
+        <video class="exercise-video" controls>
+            <source src="/static/images/child pose.mp4" type="video/mp4">
+        </video>
+    </div>
+    </div> 
+
+    <div class="exercise">
+        <h2>5. Hip Flexor Stretch</h2>
+        <p>Stretches the front of the hips to increase flexibility and alleviate tightness in the hip flexors.</p>
+        <div class="video-container">
+        <video class="exercise-video" controls>
+            <source src="/static/images/hip.mp4" type="video/mp4">
+        </video>
+    </div>
+    </div>
+    
+    <a href="{{ url_for('challenge_page') }}" , class="back-to-challenge-btn">Back to Challenge</a>
+</section>
+        
+
+    <script>
+        // Function to open the modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+    </script>
+
+</body>
+</html>

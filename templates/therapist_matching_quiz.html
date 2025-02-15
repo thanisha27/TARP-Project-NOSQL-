@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapist Matching Quiz</title>
+    <link rel="stylesheet" href="/static/styless/style.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <div class="quiz-container">
+        <h1 class="therapist">Therapist Matching Quiz</h1>
+        <p>Answer the following questions to find your best match.</p>
+
+
+        <form id="quiz-form" action="/therapist_matching_quiz" method="POST"> <!-- Added action and method -->
+            <div class="question">
+                <h2 class="therapist">1. What gender do you prefer your therapist to be?</h2>
+                <label><input type="radio" name="gender" value="male"> Male</label><br>
+                <label><input type="radio" name="gender" value="female"> Female</label><br>
+                <label><input type="radio" name="gender" value="non-binary"> Non-binary</label><br>
+                <label><input type="radio" name="gender" value="no-preference"> No Preference</label>
+            </div>
+
+            <div class="question">
+                <h2 class="therapist">2. Do you have any preferences regarding your therapist's experience level?</h2>
+                <label><input type="radio" name="experience-level" value="new"> Newer Therapist (0-5 years)</label><br>
+                <label><input type="radio" name="experience-level" value="experienced"> Experienced Therapist (5+ years)</label><br>
+                <label><input type="radio" name="experience-level" value="no-preference"> No Preference</label>
+            </div>
+            
+            <div class="question">
+                <h2 class="therapist">3. What is your preferred language for therapy sessions?</h2>
+                <label><input type="radio" name="language" value="english"> English</label><br>
+                <label><input type="radio" name="language" value="spanish"> Spanish</label><br>
+                <label><input type="radio" name="language" value="other"> Other (please specify): <input type="text" name="other-language" placeholder="Specify here"></label>
+            </div>            
+
+            <div class="question">
+                <h2 class="therapist">4. Which therapeutic approaches are you interested in? (Select all that apply)</h2>
+                <label><input type="checkbox" name="approaches" value="CBT"> Cognitive Behavioral Therapy (CBT)</label><br>
+                <label><input type="checkbox" name="approaches" value="DBT"> Dialectical Behavior Therapy (DBT)</label><br>
+                <label><input type="checkbox" name="approaches" value="psychodynamic"> Psychodynamic Therapy</label><br>
+                <label><input type="checkbox" name="approaches" value="humanistic"> Humanistic Therapy</label>
+            </div>
+
+            <div class="question">
+                <h2 class="therapist">5. What format do you prefer for your sessions?</h2>
+                <label><input type="radio" name="session-format" value="in-person"> In-person</label><br>
+                <label><input type="radio" name="session-format" value="virtual"> Virtual</label><br>
+                <label><input type="radio" name="session-format" value="either"> Either</label>
+            </div>
+
+            <div class="question">
+                <h2 class="therapist">6. How often would you like to meet with your therapist?</h2>
+                <label><input type="radio" name="frequency" value="weekly"> Weekly</label><br>
+                <label><input type="radio" name="frequency" value="bi-weekly"> Bi-weekly</label><br>
+                <label><input type="radio" name="frequency" value="monthly"> Monthly</label>
+            </div>
+
+            <div class="question">
+                <h2 class="therapist">7. What issues are you seeking help with? (Select all that apply)</h2>
+                <label><input type="checkbox" name="issues" value="anxiety"> Anxiety</label><br>
+                <label><input type="checkbox" name="issues" value="depression"> Depression</label><br>
+                <label><input type="checkbox" name="issues" value="relationship"> Relationship Issues</label><br>
+                <label><input type="checkbox" name="issues" value="trauma"> Trauma</label><br>
+                <label><input type="checkbox" name="issues" value="stress"> Stress Management</label>
+            </div>
+
+            <div class="question">
+                <h2 class="therapist">8. What is your preferred method of contact for follow-up?</h2>
+                <label><input type="radio" name="contact-method" value="email"> Email</label><br>
+                <label><input type="radio" name="contact-method" value="phone"> Phone</label><br>
+                <label><input type="radio" name="contact-method" value="text"> Text Message</label>
+            </div>
+            
+            <div class="question">
+                <h2 class="therapist">9. Do you have any specific requests or requirements for your therapy sessions?</h2>
+                <label><input type="text" name="specific-requests" placeholder="Please specify here"></label>
+            </div>
+            
+            <input type="hidden" id="user_location" name="user_location">
+            
+            <button type="submit" class="submit-button">Find My Therapist Match</button>
+
+        </form>
+    </div>
+
+    <button class="back-button" onclick="location.href='{{ url_for('book_consultation_page') }}'">Back</button>
+
+
+
+    <script>
+        // Removed the JavaScript that prevents form submission
+        // The form will now submit to the server as expected
+
+        // Modal functionality
+        var modal = document.getElementById("qnAModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        // Function to get the user's current location
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // Store the coordinates in the hidden input field
+                    document.getElementById("user_location").value = JSON.stringify([position.coords.longitude, position.coords.latitude]);
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+// Automatically get the location when the page loads
+window.onload = getLocation;
+    </script>
+</body>
+</html>
+
+
+

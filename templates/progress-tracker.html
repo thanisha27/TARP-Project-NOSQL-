@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Care Tips</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">CalmConnect</a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                    <!-- Add more navigation links as needed -->
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </header>
+
+<section class="progress-tracker">
+    <h1>Track Your Progress</h1>
+    <p>Stay motivated by tracking your self-care journey! Log your daily activities and see how far you've come.</p>
+
+    <div class="tracker-container">
+        <h2>Progress Log</h2>
+        <form action="submit_progress.php" method="post" class="progress-form">
+            <label for="day">Day:</label>
+            <select id="day" name="day" required>
+                <option value="1">Day 1</option>
+                <option value="2">Day 2</option>
+                <option value="3">Day 3</option>
+                <option value="4">Day 4</option>
+                <option value="5">Day 5</option>
+                <option value="6">Day 6</option>
+                <option value="7">Day 7</option>
+            </select>
+
+            <label for="activity">Activity Completed:</label>
+            <textarea id="activity" name="activity" rows="4" placeholder="Describe your activity for the day..." required></textarea>
+
+            <label for="mood">Mood:</label>
+            <select id="mood" name="mood" required>
+                <option value="happy">Happy</option>
+                <option value="calm">Calm</option>
+                <option value="stressed">Stressed</option>
+                <option value="energized">Energized</option>
+                <option value="tired">Tired</option>
+            </select>
+
+            <button type="submit" class="submit-btn">Submit Progress</button>
+        </form>
+    </div>
+
+    <div class="progress-summary">
+        <h2>Your Journey So Far</h2>
+        <p>Keep an eye on how your mood and activities evolve as you progress through the challenge.</p>
+        <ul>
+            <li>Day 1: Meditated for 10 minutes. Mood: Calm</li>
+            <li>Day 2: Completed stretching exercises. Mood: Energized</li>
+            <!-- More progress entries can be added dynamically -->
+        </ul>
+    </div>
+
+    <a href="{{ url_for('challenge_page') }}", class="back-to-challenge-btn">Back to Challenge</a>
+</section>
+
+</body>
+</html>

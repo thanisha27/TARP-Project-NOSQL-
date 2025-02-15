@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalmConnect</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="{{ url_for('index_page') }}"><img src="/static/images/06a59527-66f7-4d97-acfa-45027b1e8fdd Background Removed.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('about_page') }}">ABOUT</a></li>
+                    <li><a href="{{ url_for('blog_page') }}">BLOG</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1 class="mblog">Mental Health Blog</h1>
+    </section>
+<!----------------------blog page content------------->
+
+<section class="blog-content">
+    <div class="row">
+        <div class="blog-left">
+        <img src="/static/images/111111111111blog.jpg">
+        <h2>Mental Health Blog</h2>
+        <p>Welcome to the CalmConnect Mental Health Blog, your go-to resource for understanding and navigating the complexities of mental well-being. We believe that mental health is just as important as physical health, and our blog is designed to offer you a wealth of knowledge and inspiration to support your journey towards a more balanced and fulfilling life. Whether you're seeking guidance on overcoming challenges, tips for managing stress, or insights into mental health trends, our blog serves as a hub for reliable information tailored to your needs.</p>
+        <br>
+        <p>At CalmConnect, we recognize that mental health experiences are deeply personal, and that's why we share a variety of perspectives—from expert advice from mental health professionals to real-life stories of individuals who have successfully overcome mental health challenges. Our posts cover a broad range of topics, including mindfulness practices, anxiety management, depression recovery, and coping strategies for introverts in a social world. By engaging with our blog, you'll find helpful tips, practical exercises, and the emotional support you need to take meaningful steps toward improving your mental health.</p>
+        <br>
+        <p>Our goal is to create a supportive community where introverts and others seeking a quiet path to well-being can find solace and encouragement. From articles discussing the latest in mental health research to those that offer simple daily habits to boost your mood, our blog is a valuable companion on your mental wellness journey. We are committed to helping you find the right strategies and tools that resonate with your unique situation, whether you're looking for professional advice or comforting words from someone who understands what you're going through.</p>
+        <br>
+        <p>In addition to regular blog posts, we also feature curated content focusing on mental health news, updates on recent trends in therapy, and information on innovative approaches to mental health care. Whether you're an introvert looking for tips on maintaining your mental health, or someone trying to support a loved one, the CalmConnect Mental Health Blog has something for everyone. Dive into our posts, engage with our community, and take the next step in prioritizing your mental well-being today.</p>
+
+        <br><br>
+
+                <!-- Personal Stories Section -->
+                <form action="{{ url_for('submit_story') }}" method="POST">
+                    <label for="story">Share Your Personal Story:</label>
+                    <textarea id="story" name="story" rows="5" cols="50" required></textarea>
+                    <button type="submit">Submit Story</button>
+                </form>
+                <br><br>
+
+                <!-- Ask the Expert Section -->
+                <h3>Ask the Expert</h3>
+                <p>Have questions about mental health? Our monthly Q&A series allows users to ask their pressing questions to a mental health expert. Submit your questions for the next session!</p>
+                <button class="expert-button" onclick="openForm('expert')">Submit Your Question</button>
+                <button class="expert-button" id="viewQnA">View Previous Q&A</button>
+
+                <br><br>
+
+                <!-- Trending Topics Section -->
+                <h3>Trending Topics</h3>
+                <p>Discover the latest in mental health. We cover trending topics like new therapy techniques, mindfulness practices, and tips for better work-life balance.</p>
+                <ul class="topics-list">
+                    <li>Mindfulness Practices for Beginners</li>
+                    <li>Work-Life Balance Hacks</li>
+                    <li>New Therapy Techniques for Anxiety</li>
+                </ul>
+
+                <br><br>
+
+                <!-- Book & App Recommendations -->
+                <h3>Book & App Recommendations</h3>
+                <p>Looking for resources? We review the best mental health books, apps, and tools to help you on your journey towards mental well-being.</p>
+                <button class="recommend-button" id="viewBooks">View Top Books</button>
+                <button class="recommend-button" id="viewApps">View Best Apps</button>
+
+                <br><br>
+            </div>
+
+            <div class="blog-right">
+                <h3>Post Categories</h3>
+                <div>
+                    <span>Mindfulness & Meditation</span> 
+                    <span>21</span>
+                </div>
+                <div>
+                    <span>Self-Care Practices</span> 
+                    <span>28</span>
+                </div>
+                <div>
+                    <span>Anxiety & Stress Management</span> 
+                    <span>15</span>
+                </div>
+                <div>
+                    <span>Therapy & Counseling</span> 
+                    <span>30</span>
+                </div>
+                <div>
+                    <span>Mental Health for Introverts</span> 
+                    <span>42</span>
+                </div>
+                <div>
+                    <span>Personal Growth & Motivation</span> 
+                    <span>22</span>
+                </div>
+                <div>
+                    <span>Coping with Depression</span> 
+                    <span>35</span>
+                </div>
+                <div>
+                    <span>Mental Health Trends</span> 
+                    <span>37</span>
+                </div>
+                <div>
+                    <span>Work-Life Balance</span> 
+                    <span>27</span>
+                </div>
+                <div>
+                    <span>Introvert-Friendly Activities</span> 
+                    <span>16</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hidden forms for story and expert submission -->
+    <div id="story-form" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeForm('story')">&times;</span>
+            <h2>Submit Your Personal Story</h2>
+            <form>
+                <textarea placeholder="Write your story here..." rows="5"></textarea><br>
+                <button type="submit" class="submit-form-button">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div id="expert-form" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeForm('expert')">&times;</span>
+            <h2>Ask the Expert</h2>
+            <form>
+                <textarea placeholder="Ask your question here..." rows="5"></textarea><br>
+                <button type="submit" class="submit-form-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Q&A -->
+     <div id="qnAModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Here is the content for the Previous Q&A...</p>
+        </div>
+    </div>
+
+    <!-- Modal for Books -->
+     <div id="booksModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Here is the content for the Top Books...</p>
+        </div>
+    </div>
+
+    <!-- Modal for Apps -->
+     <div id="appsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Here is the content for the Best Apps...</p>
+        </div>
+    </div>
+
+    <!-- Previous Q&A Section -->
+    <section class="qa-section">
+        <h2>Previous Q&A</h2>
+        <div class="qa-item">
+            <h3>Q1: What are the best ways to manage anxiety?</h3>
+            <p><em>A: Cognitive Behavioral Therapy (CBT), mindfulness techniques, and regular exercise can help manage anxiety effectively.</em></p>
+        </div>
+        <div class="qa-item">
+            <h3>Q2: How can I improve my sleep habits?</h3>
+            <p><em>A: Creating a consistent bedtime routine, limiting screen time before bed, and using relaxation techniques like deep breathing can improve sleep quality.</em></p>
+        </div>
+    </section>
+
+     <!-- View Top Books Button -->
+      <button onclick="scrollToBooks()">View Top Books</button>
+
+    <!-- Top Books Section -->
+     <section id="books-section" class="books-section">
+        <h2>Top Books for Mental Health and Wellness</h2>
+        <div class="book-item">
+            <div class="book-details">
+                <h3>The Anxiety and Phobia Workbook</h3>
+                <p>This workbook offers practical exercises to help people overcome anxiety, fear, and panic attacks.</p>
+                <a href="/static/images/the-anxiety-and-phobia-workbook-7nbsped-9781684034857.pdf" target="_blank">Download The Anxiety and Phobia Workbook (PDF)</a>
+            </div>
+        </div>
+        <div class="book-item">
+            <div class="book-details">
+                <h3>Feeling Good: The New Mood Therapy</h3>
+                <p>A book offering strategies for combating depression through cognitive-behavioral techniques.</p>
+                <a href="/static/images/feeling-good-the-new-mood-therapy-9780062136497-0062136496.pdf" target="_blank">Download Feeling Good: The New Mood Therapy (PDF)</a>
+            </div>
+        </div>
+        <button onclick="document.getElementById('books-section').scrollIntoView({ behavior: 'smooth' });">
+            View Top Books
+        </button>        
+    </section>
+
+
+    <!-- Best Apps Section -->
+    <section class="apps-section">
+        <h2>Best Mental Health Apps</h2>
+        <div class="app-item">
+            <h3>Headspace</h3>
+            <p>Guided meditation and mindfulness exercises to reduce stress and anxiety.</p>
+            <a href="https://www.headspace.com/" target="_blank" class="download-btn">Download Now</a>
+    </div>
+        </div>
+        <div class="app-item">
+            <h3>Calm</h3>
+            <p>Meditation, sleep stories, and relaxing sounds to help improve sleep and reduce anxiety.</p>
+            <a href="https://www.calm.com/" target="_blank" class="download-btn">Download Now</a>
+        </div>
+    </section>
+</div>
+
+<!-------------Footer----------> 
+<section class="footer">
+    <h4>About Us</h4>
+    <p>CalmConnect is committed to providing accessible mental health support...</p>
+    <div class="icons">
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-linkedin"></i>
+    </div>
+    <p>Crafted With Care <i class="fa fa-heart-o"></i> By The CalmConnect Team</p>
+</section>
+
+<!------JavaScript for Toggle Menu and Modals-------->
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu() {
+        navLinks.style.right = "0";
+    }
+    function hideMenu() {
+        navLinks.style.right = "-200px";
+    }
+
+    // Function to open the form modal
+    function openForm(formType) {
+        const modal = document.getElementById(`${formType}-form`);
+        modal.style.display = "block";
+    }
+
+    // Function to close the form modal
+    function closeForm(formType) {
+        const modal = document.getElementById(`${formType}-form`);
+        modal.style.display = "none";
+    }
+
+    // Close the modal if clicked outside of it
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+        }
+    }
+
+    // Get the modals
+    var qnAModal = document.getElementById("qnAModal");
+    var booksModal = document.getElementById("booksModal");
+    var appsModal = document.getElementById("appsModal");
+
+    // Get the buttons that open the modals
+    
+    var btnQnA = document.getElementById("viewQnA");
+    var btnBooks = document.getElementById("viewBooks");
+    var btnApps = document.getElementById("viewApps");
+    
+    // Get the <span> elements that close the modals
+    var spanClose = document.getElementsByClassName("close");
+
+    // Open modal logic
+    btnQnA.onclick = function() {
+        qnAModal.style.display = "block";
+    }
+    btnBooks.onclick = function() {
+        booksModal.style.display = "block";
+    }
+    btnApps.onclick = function() {
+        appsModal.style.display = "block";
+    }
+
+    // Close modals when clicking on the "X"
+    var closeButtons = document.getElementsByClassName("close");
+    for (var i = 0; i < closeButtons.length; i++) {
+        closeButtons[i].onclick = function() {
+            this.parentElement.parentElement.style.display = "none";
+        }
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+        }
+    }
+    </script>
+    
+    </body>
+</html>

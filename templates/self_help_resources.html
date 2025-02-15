@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Care Tips</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">CalmConnect</a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                    <!-- Add more navigation links as needed -->
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </header>
+    
+    <section class="self-care">
+        <h1>Self-Care Tips</h1>
+        <p>Discover easy-to-follow strategies to nurture your well-being. Balance your mind, body, and soul with these expert-approved techniques.</p>
+    
+        <!-- Self-Care Challenge -->
+        <div class="self-care-challenge">
+            <h2>7-Day Self-Care Challenge</h2>
+            <p>Start a journey to better wellness with our 7-day challenge. Each day, unlock a new self-care task designed to help you relax and recharge.</p>
+            <a href="{{ url_for('challenge_page') }}" class="challenge-btn">Start Challenge</a>
+
+        </div>
+    
+        <!-- Key Strategies with Infographics -->
+        <div class="self-care-strategies">
+            <h2>Key Strategies</h2>
+            <ul>
+                <li>
+                    <img src="/static/images/WhatsApp Image 2024-09-24 at 21.05.13_8847e4c1.jpg" alt="Mindfulness Infographic">
+                    <strong>Mindfulness and Meditation:</strong> Try our guided breathing exercise for quick stress relief.
+                </li>
+                <li>
+                    <img src="/static/images/WhatsApp Image 2024-09-25 at 12.06.37_8146e834.jpg" alt="Exercise Infographic">
+                    <strong>Regular Physical Exercise:</strong> Explore simple stretches to start your day with energy.
+                </li>
+                <li>
+                    <img src="/static/images/WhatsApp Image 2024-09-24 at 21.28.40_3f4eb503.jpg" alt="Nutrition Infographic">
+                    <strong>Healthy Eating Habits:</strong> Download our nutrition guide with easy-to-prepare recipes.
+                </li>
+                <li>
+                    <img src="/static/images/WhatsApp Image 2024-09-25 at 11.56.30_3c143470.jpg" alt="Support Infographic">
+                    <strong>Building a Support Network:</strong> Connect with friends or join a virtual wellness group.
+                </li>
+            </ul>
+        </div>
+    
+    
+        <!-- User Stories & Testimonials -->
+        <div class="self-care-stories">
+            <h2>User Stories</h2>
+            <div class="story">
+                <p><strong>John D.</strong> “The 7-day self-care challenge really helped me get back on track. I feel less stressed and more in control of my day!”</p>
+            </div>
+            <div class="story">
+                <p><strong>Sarah P.</strong> “Mindfulness exercises have changed the way I handle anxiety. Now I meditate for 10 minutes every day!”</p>
+            </div>
+            <!-- Add more stories dynamically -->
+        </div>
+    
+        <!-- Interactive Poll -->
+        <div class="self-care-poll">
+            <h2>How Do You De-Stress?</h2>
+            <p>Let us know your favorite way to unwind and see what others are doing!</p>
+            <form action="submit_poll.php" method="post" class="poll-form">
+                <div class="poll-options">
+                    <label>
+                        <input type="radio" name="destress" value="meditation"> Meditation
+                    </label>
+                    <label>
+                        <input type="radio" name="destress" value="exercise"> Exercise
+                    </label>
+                    <label>
+                        <input type="radio" name="destress" value="reading"> Reading
+                    </label>
+                    <label>
+                        <input type="radio" name="destress" value="other"> Other
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        
+            <div class="live-results">
+                <h2>Live Results:</h2>
+                <ul>
+                    <li>Meditation: 45%</li>
+                    <li>Exercise: 30%</li>
+                    <li>Reading: 15%</li>
+                    <li>Other: 10%</li>
+                </ul>
+            </div>
+        </div>
+    
+        <p>For more detailed guides and tips, visit our <a href="blog.html">blog</a>
+        <section class="feedback-form">
+            <h2>Share Your Tips</h2>
+            <form action="submit_form.php" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Your Self-Care Tip or Question:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 CalmConnect. All rights reserved.</p>
+    </footer>
+
+    <script>
+        var navLinks = document.getElementById("navLinks");
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

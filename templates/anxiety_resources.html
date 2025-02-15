@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Managing Anxiety</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">CalmConnect</div>
+            <div class="nav-links">
+            <ul>
+                <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Interactive Cards Section -->
+    <section class="techniques-container">
+        <div class="technique-card" onclick="showModal('cbt')">
+            <h3 class="card-title calming">Cognitive Behavioral Therapy (CBT)</h3>
+            <p>Learn how CBT helps in managing negative thoughts and behaviors.</p>
+            <button onclick="showModal('cbt')">Learn More</button>
+        </div>
+
+        <div class="technique-card" onclick="showModal('breathing')">
+            <h3 class="card-title">Deep Breathing Exercises</h3>
+            <p>Practice deep breathing techniques to help reduce anxiety.</p>
+            <button onclick="showModal('breathing')">Learn More</button>
+        </div>
+
+        <div class="technique-card" onclick="showModal('pmr')">
+            <h3 class="card-title">Progressive Muscle Relaxation</h3>
+            <p>Relax your muscles progressively to reduce tension.</p>
+            <button onclick="showModal('pmr')">Learn More</button>
+        </div>
+
+        <div class="technique-card" onclick="showModal('imagery')">
+            <h3 class="card-title">Guided Imagery</h3>
+            <p>Use visualization techniques to calm your mind.</p>
+            <button onclick="showModal('imagery')">Learn More</button>
+        </div>
+    </section>
+
+    <!-- Modals for each technique -->
+    <div id="modal-cbt" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cbt')">&times;</span>
+            <h2>Cognitive Behavioral Therapy (CBT)</h2>
+            <p>Cognitive Behavioral Therapy (CBT) is a structured therapy aimed at identifying and challenging negative thought patterns. It is highly effective in treating anxiety.</p>
+        </div>
+    </div>
+
+    <div id="modal-breathing" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('breathing')">&times;</span>
+            <h2>Deep Breathing Exercises</h2>
+            <p>Deep breathing helps reduce stress by increasing oxygen supply to the brain. Follow these simple steps to practice deep breathing.</p>
+        </div>
+    </div>
+
+    <div id="modal-pmr" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('pmr')">&times;</span>
+            <h2>Progressive Muscle Relaxation</h2>
+            <p>Tense and release different muscle groups to reduce stress and anxiety with progressive muscle relaxation.</p>
+        </div>
+    </div>
+
+    <div id="modal-imagery" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('imagery')">&times;</span>
+            <h2>Guided Imagery</h2>
+            <p>Guided imagery is a relaxation technique where you focus on calming images to alleviate anxiety and stress.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="anxiety">Anxiety Tracker</h1>
+
+        <!-- Anxiety Level Input -->
+         <div class="anxiety-level">
+            <h2>Rate Your Anxiety Level Today</h2>
+            <div class="slider-container">
+                <label for="anxietyLevel">How anxious are you feeling? (0-10)</label>
+                <input type="range" id="anxietyLevel" min="0" max="10" value="0" step="1">
+                <span id="anxietyOutput">0</span>
+            </div>
+        </div>
+
+        <!-- Journal Section -->
+        <section class="journal">
+            <h2>Today's Reflection</h2>
+            <textarea id="journalEntry" rows="5" placeholder="What are you feeling today? Any triggers or helpful coping mechanisms?"></textarea>
+            <button id="saveEntry">Save Reflection</button>
+            <p id="saveMessage" class="hidden"></p>
+        </section>
+
+        <!-- Personalized Recommendations -->
+         <section class="recommendations">
+            <h2>Personalized Recommendation</h2>
+            <p id="recommendationText">Based on your anxiety level today, we recommend trying deep breathing exercises to relax.</p>
+            <div class="suggestion-container" id="suggestionContainer">
+        <!-- Extra details can be shown here based on anxiety level -->
+    </div>
+</section>
+
+        
+
+        <!-- Weekly Summary Report -->
+        <section class="reports">
+            <h2>Your Weekly Summary</h2>
+            <canvas id="anxietyChart" width="400" height="200"></canvas>
+        </section>
+
+        <!-- Gamification - Progress Badges -->
+        <section class="progress-badges">
+            <h2>Your Achievements</h2>
+            <div class="badges" id="badgeContainer">
+                <span id="mindfulnessMaster" class="badge hidden">Mindfulness Master</span>
+                <span id="trackerBadge" class="badge hidden">7-Day Tracker</span>
+                <span class="badge">Calm & Collected</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript for Modal and Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/anxiety.js"></script>
+    <script>
+        // Modal Functions
+        function showModal(modalId) {
+            document.getElementById('modal-' + modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById('modal-' + modalId).style.display = 'none';
+        }
+
+        const anxietyLevel = document.getElementById('anxietyLevel');
+        const anxietyOutput = document.getElementById('anxietyOutput');
+        const recommendationText = document.getElementById('recommendationText');
+        const journalEntry = document.getElementById('journalEntry');
+        const saveEntryButton = document.getElementById('saveEntry');
+        const saveMessage = document.getElementById('saveMessage');
+
+        // Save Anxiety Level and Journal Entry
+        async function saveData() {
+            const level = anxietyLevel.value;
+            const reflection = journalEntry.value;
+
+            try {
+                // Send anxiety level to Flask API
+                const responseAnxiety = await fetch('/save_anxiety', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ level })
+                });
+                const anxietyResult = await responseAnxiety.json();
+
+                // Send reflection to Flask API
+                const responseReflection = await fetch('/save_reflection', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ reflection })
+                });
+                const reflectionResult = await responseReflection.json();
+
+                // Show success message
+                if (anxietyResult.message && reflectionResult.message) {
+                    saveMessage.textContent = "Anxiety level and reflection saved successfully!";
+                    saveMessage.classList.remove('hidden');
+                    journalEntry.value = ''; // Clear the textarea
+                }
+            } catch (error) {
+                console.error("Error saving data:", error);
+                saveMessage.textContent = "Error saving data!";
+                saveMessage.classList.remove('hidden');
+            }
+        }
+
+        // Save Button Click Event
+        saveEntryButton.addEventListener('click', saveData);
+
+
+
+
+
+        // Load data from local storage
+        const loadData = () => {
+            const entries = JSON.parse(localStorage.getItem('anxietyEntries')) || [];
+            const today = new Date().toDateString();
+
+            // Check for existing entries for today
+            if (entries.find(entry => entry.date === today)) {
+                saveMessage.textContent = "You've already logged your feelings today.";
+                saveMessage.classList.remove('hidden');
+            } else {
+                saveMessage.classList.add('hidden');
+            }
+
+            loadBadges(entries); // Load badges after checking existing entries
+        };
+
+        // Update Anxiety Level Output
+        anxietyLevel.addEventListener('input', function() {
+            const level = anxietyLevel.value;
+            anxietyOutput.textContent = level;
+
+            // Provide dynamic recommendation based on anxiety level
+            if (level <= 3) {
+                recommendationText.textContent = "You seem calm today. Try journaling to maintain your mood.";
+            } else if (level <= 6) {
+                recommendationText.textContent = "It might help to practice deep breathing or mindfulness meditation.";
+            } else if (level <= 8) {
+                recommendationText.textContent = "Consider taking a short break and practicing relaxation techniques.";
+            } else {
+                recommendationText.textContent = "Your anxiety seems high. Try grounding exercises or seek professional support.";
+            }
+        });
+
+        // Save Journal Entry
+        saveEntryButton.addEventListener('click', () => {
+            const entries = JSON.parse(localStorage.getItem('anxietyEntries')) || [];
+            const today = new Date().toDateString();
+
+            // Save today's entry
+            entries.push({ date: today, reflection: journalEntry.value, level: anxietyLevel.value });
+            localStorage.setItem('anxietyEntries', JSON.stringify(entries));
+
+            saveMessage.textContent = "Reflection saved!";
+            saveMessage.classList.remove('hidden');
+            journalEntry.value = ''; // Clear the textarea
+            loadBadges(entries); // Load badges after saving
+        });
+
+        // Load Badges based on entries
+        const loadBadges = (entries) => {
+            const uniqueDays = new Set(entries.map(entry => entry.date));
+            const totalDaysLogged = uniqueDays.size;
+
+            // Unlock badges based on criteria
+            if (totalDaysLogged >= 7) {
+                document.getElementById('trackerBadge').classList.remove('hidden');
+            }
+
+            // Always show for demonstration (modify criteria as needed)
+            document.getElementById('mindfulnessMaster').classList.remove('hidden'); 
+        };
+
+        // Chart.js - Weekly Summary Chart
+        async function loadAnxietyData() {
+        try {
+            const response = await fetch('/get_anxiety_data');
+            const anxietyData = await response.json();
+
+            // Extract dates and levels
+            const labels = anxietyData.map(entry => entry.date);
+            const levels = anxietyData.map(entry => entry.level);
+
+            // Update the chart with fetched data
+            const ctx = document.getElementById('anxietyChart').getContext('2d');
+            const anxietyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Anxiety Levels',
+                        data: levels,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: 'Anxiety Level'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    // Load data when the page loads
+    window.onload = loadAnxietyData;
+
+        // Initialize the page
+        loadData();
+    </script>
+
+    <footer>
+        <p>&copy; 2024 CalmConnect. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalmConnect</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="{{ url_for('index_page') }}"><img src="/static/images/06a59527-66f7-4d97-acfa-45027b1e8fdd Background Removed.png" alt="CalmConnect Logo"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" aria-expanded="false" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('about_page') }}">ABOUT</a></li>
+                    <li><a href="{{ url_for('blog_page') }}">BLOG</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" aria-expanded="true" onclick="hideMenu()"></i>
+        </nav>
+        <h1 class="mblog">Resources</h1>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources">
+        <div class="resource-container">
+            <div class="resource-box">
+                <h3>Self-Care Tips</h3>
+                <p>Explore simple strategies to manage stress and improve your well-being.</p>
+                <a href="{{ url_for('self_help_resources') }}" class="resource-btn">Read More</a>
+            </div>
+            <div class="resource-box">
+                <h3>Managing Anxiety</h3>
+                <p>Learn how to cope with anxiety and find practical tools to feel calmer.</p>
+                <a href="{{ url_for('anxiety_resources') }}" class="resource-btn">Read More</a>
+            </div>
+            <div class="resource-box">
+                <h3>Finding a Therapist</h3>
+                <p>Get guidance on how to choose the right mental health professional for your needs.</p>
+                <a href="{{ url_for('therapist_resources') }}" class="resource-btn">Read More</a>
+            </div>
+            <div class="resource-box">
+                <h3>Mental Health Videos</h3>
+                <p>Watch informative videos that cover a wide range of mental health topics.</p>
+                <a href="{{ url_for('video_resources') }}" class="resource-btn">Watch Now</a>
+            </div>
+        </div>
+    </section>
+
+    
+        <!-- Quizzes & Assessments -->
+        <div class="self-care-quiz">
+            <h2>What’s Your Stress Level?</h2>
+            <p>Take this quick quiz to find out your current stress level and get personalized self-care suggestions!</p>
+            <a href="{{ url_for('quiz_page') }}" class="btn-quiz">Take the Quiz</a>
+        </div>
+
+    <!-- Daily Mood Tracker Section -->
+    <section class="mood-tracker-container">
+        <h2>Daily Mood Tracker</h2>
+        <p>Log your mood every day and receive personalized tips and resources.</p>
+        <form action="{{ url_for('log_data') }}" method="post"> <!-- Correct placement of form tag -->
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="mood">How are you feeling today?</label>
+                <select id="mood" name="mood" required>
+                    <option value="happy">Happy 😊</option>
+                    <option value="sad">Sad 😢</option>
+                    <option value="anxious">Anxious 😟</option>
+                    <option value="angry">Angry 😠</option>
+                    <option value="neutral">Neutral 😐</option>
+                </select>
+            </div>
+            <button type="submit" class="tracker-btn">Log Mood</button>
+        </form>
+    </section>
+
+
+    <!-- Feedback Form Section -->
+     <section class="feedback-form">
+        <h2>Your Input Matters</h2>
+        <p>We’re committed to providing resources that truly help. Please share your thoughts, questions, or suggestions to help us improve our services.</p>
+        <form action="{{ url_for('submit_feedbacks') }}" method="post"> <!-- Updated the form action -->
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="topic">What topic would you like more information on?</label>
+                <select id="topic" name="topic" required>
+                    <option value="stress_relief">Stress Relief Strategies</option>
+                    <option value="in_person_consultations">In-Person Consultations</option>
+                    <option value="therapist_finding">Finding a Therapist</option>
+                    <option value="mental_health_videos">Mental Health Videos</option>
+                    <option value="other">Other (Please specify)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Additional Comments or Suggestions:</label>
+                <textarea id="feedback" name="feedback" rows="4" placeholder="Share your thoughts here..."></textarea>
+            </div>
+            <button type="submit" class="feedback-btn">Submit Feedback</button>
+        </form>
+    </section>
+
+
+    <!-- Visuals and Multimedia Section -->
+    <section class="visuals">
+        <h2 class="visual">Visual Resources</h2>
+        <div class="visual-container">
+            <div class="visual-box">
+                <img src="/static/images/stress-relief.jpg" alt="Stress Relief">
+                <h3 class="visual">Stress Relief Techniques</h3>
+                <p>Discover effective techniques to manage and reduce stress.</p>
+            </div>
+            <div class="visual-box">
+                <img src="/static/images/WhatsApp Image 2024-09-15 at 15.05.07_65d5be8e.jpg" alt="Finding a Therapist">
+                <h3 class="visual">Choosing a Therapist</h3>
+                <p>Find out how to select the right therapist for your needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>CalmConnect is committed to providing accessible mental health support. Our platform connects you with nearby professionals, self-help tools, and resources to guide your wellness journey. Whether you need immediate help or ongoing care, we're here to offer confidential and compassionate support.</p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>
+        </div>
+        <p>Crafted With Care <i class="fa fa-heart-o"></i> By The CalmConnect Team</p>
+        <button onclick="scrollToTop()" id="topBtn" title="Go to top">Top</button>
+
+    </section>
+
+    <!-- JavaScript for Toggle Menu -->
+    <script>
+        var navLinks = document.getElementById("navLinks");
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+    </script>
+    
+</body>
+</html>

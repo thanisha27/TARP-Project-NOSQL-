@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Free Consultation</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="book-container">
+        <h1 class="book">Book a Free Consultation</h1>
+        <p>Select a date and time for your free consultation.</p>
+        
+        <!-- Updated form with POST action and AJAX submission -->
+        <form id="booking-form" action="/book_consultation" method="POST" onsubmit="return submitBookingForm(event)">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required aria-required="true" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required aria-required="true" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Your Phone Number</label>
+                <input type="tel" id="phone" name="phone" required aria-required="true" placeholder="Enter your phone number">
+            </div>
+
+            <div class="form-group">
+                <label for="date">Select Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="time">Select Time</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+
+            <button type="submit">Confirm Booking</button>
+        </form>
+
+        <div class="confirmation-message" id="confirmation-message"></div>
+        <div id="confirmation-message-container" style="display:none;">
+            Thank you for booking your consultation! We will contact you shortly.
+        </div>
+
+        <button onclick="location.href='{{ url_for('nearest_facilities') }}'">Back</button>
+
+        
+    </div>
+
+    <!-- Script to handle form submission via AJAX -->
+    <script>
+        function submitBookingForm(event) {
+            event.preventDefault(); // Prevent the form from reloading the page
+
+            // Gather form data
+            const formData = new FormData(document.getElementById('booking-form'));
+            
+            // Fetch API to send form data asynchronously
+            fetch('/book_consultation', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show confirmation message if booking is successful
+                    document.getElementById('confirmation-message-container').style.display = 'block';
+                } else {
+                    // Display an error message if something went wrong
+                    alert("Booking failed: " + (data.error || "Unknown error"));
+                }
+            })
+            .catch(error => {
+                alert("An error occurred: " + error);
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="resources.html">Resources</a>
+            <a href="video_resources.html">Mental Health Videos</a>
+            <a href="user_profile.html">User Profile</a> <!-- User Profile Link -->
+        </nav>
+    </header>
+
+    <section class="profile-detail">
+        <h1>User Profile</h1>
+
+        <!-- Profile Picture Upload -->
+        <form id="profile-form">
+            <label for="profile-picture">Profile Picture:</label>
+            <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
+            <img id="profile-picture-preview" src="" alt="Profile Picture Preview" style="display: none; width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+
+            <!-- Username, Email, and Bio -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="JohnDoe123" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="john.doe@example.com" required>
+
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" rows="4">A brief bio about yourself.</textarea>
+
+            <!-- Favorite Videos -->
+            <label for="favorites">Favorite Videos:</label>
+            <ul id="favorites">
+                <li>Introduction to Mindfulness</li>
+                <li>Understanding Anxiety</li>
+            </ul>
+
+            <button type="submit">Save Changes</button>
+        </form>
+
+        <!-- Password Management -->
+        <h2>Password Management</h2>
+        <form id="password-form">
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" name="current-password" required>
+
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" name="new-password" required>
+            <div id="password-strength"></div>
+
+            <label for="confirm-password">Confirm New Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+
+            <button type="submit">Change Password</button>
+        </form>
+
+        <!-- Watch History -->
+        <h2>Your Activity</h2>
+        <p>You have watched 5 videos this month.</p>
+        <h3>Watch History:</h3>
+        <ul id="watch-history">
+            <li>Introduction to Mindfulness - Watched on 2024-09-20</li>
+            <li>Understanding Anxiety - Watched on 2024-09-18</li>
+            <li>Building Resilience - Watched on 2024-09-15</li>
+        </ul>
+
+        <!-- Social Links -->
+        <h2>Social Links</h2>
+        <form id="social-links-form">
+            <label for="facebook">Facebook:</label>
+            <input type="url" id="facebook" name="facebook" placeholder="https://facebook.com/yourprofile">
+
+            <label for="twitter">Twitter:</label>
+            <input type="url" id="twitter" name="twitter" placeholder="https://twitter.com/yourprofile">
+
+            <label for="instagram">Instagram:</label>
+            <input type="url" id="instagram" name="instagram" placeholder="https://instagram.com/yourprofile">
+
+            <button type="submit">Save Social Links</button>
+        </form>
+
+        <!-- Settings -->
+        <h2>Settings</h2>
+        <form id="settings-form">
+            <label for="notifications">Email Notifications:</label>
+            <select id="notifications" name="notifications">
+                <option value="enabled">Enabled</option>
+                <option value="disabled">Disabled</option>
+            </select>
+
+            <button type="submit">Update Settings</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 CalmConnect. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Profile Picture Preview
+        const profilePictureInput = document.getElementById('profile-picture');
+        const profilePicturePreview = document.getElementById('profile-picture-preview');
+
+        profilePictureInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePicturePreview.src = e.target.result;
+                    profilePicturePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                profilePicturePreview.style.display = 'none';
+            }
+        });
+
+        // Password Strength Indicator
+        const newPasswordInput = document.getElementById('new-password');
+        const passwordStrength = document.getElementById('password-strength');
+
+        newPasswordInput.addEventListener('input', function() {
+            const password = newPasswordInput.value;
+            let strength = 'Weak';
+
+            if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+                strength = 'Strong';
+            } else if (password.length >= 6) {
+                strength = 'Moderate';
+            }
+
+            passwordStrength.textContent = `Password Strength: ${strength}`;
+        });
+
+        // Form Submission Alerts
+        document.getElementById('profile-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert("Profile updated successfully!");
+        });
+
+        document.getElementById('password-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert("Password changed successfully!");
+        });
+
+        document.getElementById('social-links-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert("Social links updated successfully!");
+        });
+
+        document.getElementById('settings-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert("Settings updated successfully!");
+        });
+    </script>
+</body>
+</html>

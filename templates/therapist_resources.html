@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finding a Therapist</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">CalmConnect</a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                    <!-- Add more navigation links as needed -->
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </header>
+    <section class="features-section">
+        <h2>Features to Help You</h2>
+        <div class="feature">
+            <h2>Therapist Matching Quiz</h2>
+            <p>Take a brief quiz to match you with therapists based on your preferences, such as therapist gender, therapeutic approach, and session format (in-person vs. virtual).</p>
+            <button onclick="location.href='{{ url_for('therapist_matching_quiz') }}'">Take the Quiz</button>
+
+
+
+        </div>
+
+        <div class="feature">
+            <h2>Book a Free Consultation</h2>
+            <p>Schedule a free introductory consultation with a therapist to help you decide if they are the right fit for you.</p>
+            <a href="{{ url_for('book_consultation_page') }}">
+                <button>Book Now</button>
+            </a>
+            
+        </div>
+
+        <h2>Emergency Resources:</h2>
+        <div class="emergency-resources">
+            <p>If you or someone you know is in crisis, please reach out for immediate help:</p>
+            <ul>
+                <li>National Suicide Prevention Lifeline: <strong>1-800-273-TALK (8255)</strong></li>
+                <li>Crisis Text Line: Text <strong>HELLO</strong> to <strong>741741</strong></li>
+                <li>Emergency Services: Call <strong>911</strong> for immediate assistance</li>
+                <li>Local Mental Health Services: Check your local listings for nearby resources.</li>
+            </ul>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 CalmConnect. All rights reserved.</p>
+    </footer>
+</section>
+</body>
+</html>
+
+
+
+
+
+
+
+    <!------JavaScript for Toggle Menu-------->
+<script>
+
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+    function searchTherapists() {
+            const searchInput = document.getElementById('searchInput').value;
+            // You can implement the search functionality here.
+            // For now, we'll just log the input to the console.
+            console.log('Searching for therapists:', searchInput);
+            alert(`Searching for therapists: ${searchInput}`); // Alert for demonstration
+        }
+
+</script>
+</body>
+</html>

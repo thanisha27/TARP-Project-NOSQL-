@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalmConnect</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="{{ url_for('index_page') }}"><img src="/static/images/06a59527-66f7-4d97-acfa-45027b1e8fdd Background Removed.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('about_page') }}">ABOUT</a></li>
+                    <li><a href="{{ url_for('blog_page') }}">BLOG</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1 class="mblog">About Us</h1>
+    </section>
+    <!-----------------------about us content---------------->
+
+<section class="about us">
+    <div class="row">
+        <div class="about-col">
+            <h1 class="about-title">CalmConnect</h1>
+            <p>Welcome to CalmConnect, where we believe in bridging the gap between you and the care you need. At CalmConnect, our mission is to provide a seamless and supportive experience for those seeking mental health and wellness services.</p>
+            <p>As a dedicated platform designed with introverts in mind, we understand that finding the right healthcare professionals can be challenging. Our app aims to make this process as simple and stress-free as possible. With a user-friendly interface, we help you discover nearby hospitals and psychiatrists, allowing you to book appointments with ease.</p>
+            <p>Our team is passionate about creating a safe and comforting space where you can access the support you need without the hassle. Whether you're looking for a trusted therapist or a nearby hospital, CalmConnect is here to guide you every step of the way.</p>
+            <p>Thank you for choosing CalmConnect. We're here to support you in your journey towards better mental health and well-being.</p>
+            <a href="#" class="hero-btn red-btn">EXPLORE NOW</a>
+        </div>
+        <div class="about-col">
+        <img src="/static/images/06a59527-66f7-4d97-acfa-45027b1e8fdd Background Removed.png" alt="Banner Image">
+    </div>
+</div>
+</section>
+
+<!-- Mission and Vision Section -->
+<section class="mission-vision">
+    <div class="row">
+        <div class="mission">
+            <h2 class="mission">Our Mission</h2>
+            <p>At CalmConnect, our mission is to make mental health care accessible, reduce stigma, and create a safe space where everyone can receive the support they need.</p>
+        </div>
+        <div class="vision">
+            <h2 class="mission">Our Vision</h2>
+            <p>We envision a world where mental health care is readily available, understood, and prioritized by all, no matter their background or location.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Team Introduction Section -->
+<section class="team-introduction">
+    <h2 class="mission">Meet Our Team</h2>
+    <div class="row">
+        <div class="team-member">
+            <h3 class="mission">Aaditiya S</h3>
+            <p>21MIA1112<br>VIT Chennai</p>
+        </div>
+        <div class="team-member">
+            <h3 class="mission">Thanisha G</h3>
+            <p>21MIA1120<br>VIT Chennai</p>
+        </div>
+        <div class="team-member">
+            <h3 class="mission">Raghava Iyyappan G</h3>
+            <p>21MIA1125<br>VIT Chennai</p>
+        </div>
+    </div>
+</section>
+
+<!-- Impact Section -->
+<section class="impact">
+    <h2>Our Impact</h2>
+    <div class="row">
+        <div class="impact-stat">
+            <h3>5000+</h3>
+            <p>Users Supported</p>
+        </div>
+        <div class="impact-stat">
+            <h3>50+</h3>
+            <p>Partnerships with Hospitals</p>
+        </div>
+        <div class="impact-stat">
+            <h3>10</h3>
+            <p>Awards & Recognition</p>
+        </div>
+    </div>
+</section>
+
+
+<!-------------Footer---------->
+<section class="footer">
+    <h4>About Us</h4>
+    <p>CalmConnect is committed to providing accessible mental health support. Our platform connects you with nearby professionals, self-help tools, and resources to guide your wellness journey. Whether you need immediate help or ongoing care, we're here to offer confidential and compassionate support.</p>
+    <div class="icons">
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-linkedin"></i>
+    </div>
+    <p>Crafted With Care <i class="fa fa-heart-o"></i> By The CalmConnect Team</p>
+</section>
+
+
+
+
+
+
+
+
+    <!------JavaScript for Toggle Menu-------->
+<script>
+
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+
+
+</script>
+</body>
+</html>

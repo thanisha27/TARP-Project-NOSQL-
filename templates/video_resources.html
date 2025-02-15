@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Videos</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">CalmConnect</a>
+            <nav class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                </ul>
+            </nav>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </header>
+    
+    <section class="resource-detail"></section>
+        <h1 class="mental">Mental Health Videos</h1>
+        <p>Watch informative videos that cover a wide range of mental health topics. These videos include expert interviews, guided practices, and educational content on managing mental health.</p>
+        
+        <h2>Featured Videos</h2>
+        <ul class="featured-videos">
+            <li>
+                <div class="video-grid">
+                <div class="video-card">
+                <img src="/static/images/mindfulness.jpg" alt="Introduction to Mindfulness" class="video-thumbnail" />
+                <h3>Introduction to Mindfulness</h3>
+                <p>Discover the basics of mindfulness and how it can transform your daily life.</p>
+                <button class="watch-button" onclick="openModal('modal1')">Watch Now</button>
+            </div>
+        </div>
+            </li>
+            <li>
+                <div class="video-grid">
+                <div class="video-card">
+                <img src="/static/images/understanding .jpg" alt="Understanding Anxiety" class="video-thumbnail" />
+                <h3>Understanding Anxiety</h3>
+                <p>Learn about the causes of anxiety and effective strategies to manage it.</p>
+                <button class="watch-button" onclick="openModal('modal2')">Watch Now</button>
+            </div>
+        </div>
+            </li>
+            <li>
+                <div class="video-grid">
+                <div class="video-card">
+                <img src="/static/images/building re.jpg" alt="Building Resilience" class="video-thumbnail" />
+                <h3>Building Resilience</h3>
+                <p>Discover ways to develop resilience and thrive in the face of adversity.</p>
+                <button class="watch-button" onclick="openModal('modal3')">Watch Now</button>
+            </div>
+        </div>
+            </li>
+            <li>
+                <div class="video-grid">
+                <div class="video-card">
+                <img src="/static/images/benefits of therapy.jpg" alt="The Benefits of Therapy" class="video-thumbnail" />
+                <h3>The Benefits of Therapy</h3>
+                <p>Explore how therapy can help improve your mental health and well-being.</p>
+                <button class="watch-button" onclick="openModal('modal4')">Watch Now</button>
+            </div>
+        </div>
+            </li>
+        </div>
+        </ul>
+
+        <!-- Video Modals -->
+<div id="modal1" class="video-modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal1')">&times;</span>
+        <video controls>
+            <source src="/static/images/mindfulness.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+
+<div id="modal2" class="video-modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal2')">&times;</span>
+        <video controls>
+            <source src="/static/images/understanding .mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+
+<div id="modal3" class="video-modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal3')">&times;</span>
+        <video controls>
+            <source src="/static/images/building re.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+
+<div id="modal4" class="video-modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal4')">&times;</span>
+        <video controls>
+            <source src="/static/images/benefits of therapy.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+
+
+
+        <h2>Your Personalized Recommendations:</h2>
+        <ul class="recommended-videos">
+            <li>
+                <div class="video-grid">
+                <div class="video-card">
+                <img src="/static/images/eating.jpg" alt="Mindful Eating Practices" class="video-thumbnail" />
+                <h3>Mindful Eating Practices</h3>
+                <p>Tips on how to eat mindfully to improve your mental and physical well-being.</p>
+                <button class="watch-button" onclick="openModal('modal5')">Watch Now</button>
+                </div>
+                </div>
+            </li>
+            <li>
+                <div class="video-grid">
+                <div class="video-card">
+                <img src="/static/images/coping.jpg" alt="Coping Strategies for Anxiety" class="video-thumbnail" />
+                <h3>Coping Strategies for Anxiety</h3>
+                <p>Practical coping mechanisms to reduce anxiety and improve daily living.</p>
+                <button class="watch-button" onclick="openModal('modal6')">Watch Now</button>
+                </div>
+                </div>
+            </li>
+        </ul>
+        <div id="modal5" class="video-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modal5')">&times;</span>
+                <video controls>
+                    <source src="/static/images/eating.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div id="modal6" class="video-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modal6')">&times;</span>
+                <video controls>
+                    <source src="/static/images/coping.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 CalmConnect. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function playVideo(videoUrl) {
+            // Redirect to the video player page with the video URL as a query parameter
+            window.location.href = 'video_player.html?video=' + encodeURIComponent(videoUrl);
+        }
+        function openModal(modalId) {
+             document.getElementById(modalId).style.display = 'flex';
+            }
+            function closeModal(modalId) {
+                document.getElementById(modalId).style.display = 'none';
+            }
+    </script>
+</body>
+</html>

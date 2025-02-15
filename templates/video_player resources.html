@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+</head>
+<body>
+    <header>
+        <h1>Video Player</h1>
+    </header>
+
+    <section>
+        <video id="videoPlayer" width="640" height="360" controls>
+            <!-- The video source will be set dynamically by JavaScript -->
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 CalmConnect. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Get the video URL from the query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('video');
+
+        // If there's a video URL, set it as the source of the video player
+        if (videoUrl) {
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = videoUrl;
+        }
+    </script>
+</body>
+</html>
+

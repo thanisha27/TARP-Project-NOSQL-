@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearest Facilities</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        #map {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Find Nearest Facilities</h1>
+    <div class="form-container">
+        <form id="location-form">
+            <label for="location">Select Your Location:</label>
+            <select id="location" onchange="updateFacilities()">
+                <option value="">-- Select Location --</option>
+                <option value="Tambaram">Tambaram</option>
+                <option value="Triplicane">Triplicane</option>
+                <option value="Coimbatore">Coimbatore</option>
+                <!-- Add more locations as needed -->
+            </select>
+
+            <label for="facility">Suggested Nearby Facilities:</label>
+            <select id="facility">
+                <option value="">-- Select Facility --</option>
+            </select>
+
+            <button type="button" onclick="showMap()">Show on Map</button>
+        </form>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let map;
+        let markers = [];
+
+        // Predefined data for facilities based on location
+        const facilitiesData = {
+            "Tambaram": [
+                {
+                    name: "Psychological Care - Mind Counselling",
+                    address: "Doctor's corner, 10a, Kakkan St, West Tambaram, Chennai, Tamil Nadu 600045",
+                    coords: [12.933019283239336, 80.11056230306104],
+                    contact: "09884418499"
+                },
+                {
+                    name: "Pain Xpert Physiotherapy & Rehabilitation Clinic",
+                    address: "22/7, Elumalai St, opp. to L.I.C, West Tambaram, Chennai, Tamil Nadu 600045",
+                    coords: [12.934357733506427, 80.11227891676327],
+                    contact: "08883065730"
+                },
+                {
+                    name: "Limitless Corporate Solutions and Psychological Services",
+                    address: "17/24, Velachery Main Road, Taluk, Tambaram, Chennai, Tamil Nadu 600073",
+                    coords: [12.929003889360631, 80.15691087302102],
+                    contact: "04422280466"
+                },
+                {
+                    name: "Manomithra Assessment & Psychological Services (MAPS)",
+                    address: "Ground Floor, No. 12, Ganesh Nagar Main Rd, Mahalakshmi Nagar, Selaiyur, Chennai, Tamil Nadu 600073",
+                    coords: [12.932112633321236, 80.14064807551067],
+                    contact: "08300036272"
+                },
+                {
+                    name: "Kaleeswaran",
+                    address: "No.8, 12, 1st Cross St, NGO Colony, New Perungalathur, Chennai, Tamil Nadu 600063",
+                    coords: [12.911365661134651, 80.09258289091443],
+                    contact: "09444324416"
+                }
+            ], 
+            "Triplicane": [
+                {
+                    name: "Chennai Counseling Services & CCS Academy",
+                    address: "13, Basement Section, Arulambal Street, Off Bazulla Road, T. Nagar, Chennai, Tamil Nadu 600017",
+                    coords: [13.047445671607417, 80.23786357649917],
+                    contact: "09840310536"
+                },
+                {
+                    name: "YANA COUNSELLING CENTER",
+                    address: "MIG II No:19, Thiruvalluvar Nagar, Tondiarpet, Chennai, Tamil Nadu 600081",
+                    coords: [13.137200688574179, 80.2870456685595],
+                    contact: "08248340005"
+                },
+                {
+                    name: "IDEAL PHYSIOTHERAPY CENTRE",
+                    address: "No.362(202),1st floor, Triplicane High Rd, Triplicane, Chennai, Tamil Nadu 600005",
+                    coords: [13.056876837127554, 80.27392082413712],
+                    contact: "07550165431"
+                }
+            ],
+            "Nungambakkam": [
+        {
+            name: "Dr Abilasha Psychological Clinic",
+            address: "Old No: 39, New, No:22, Kutty St, opp. Sangeetha Hotel, Seetha Nagar, Nungambakkam, Chennai, Tamil Nadu 600034",
+            coords: [13.064797307249114, 80.2425867185934],
+            contact: "09884299604"
+        },
+        {
+            name: "Apollo Children Hospitals Greams Road",
+            address: "15, Shafee Mohammed Rd, Thousand Lights, Chennai, Tamil Nadu 600006",
+            coords: [13.064290765906593, 80.2510839092168],
+            contact: "08046961837"
+        },
+        {
+            name: "Yozen Mind Counseling",
+            address: "Jagadish Building, 3, Sivagnanam St, Pondy Bazaar, T. Nagar, Chennai, Tamil Nadu 600017",
+            coords: [13.042049735090192, 80.23606353903047],
+            contact: "09840042904"
+        },
+        {
+            name: "Magnacode Psychological Counseling Clinic, Mrs. Lekha Edwin ( Best Psychologist In Chennai)",
+            address: "12, 18th Ave, Sector 10, Sector 13, Ashok Nagar, Chennai, Tamil Nadu 600083",
+            coords: [13.041418227615683, 80.21099129408567],
+            contact: "09380199199"
+        },
+        {
+            name: "Dr Srilakshmi Velandy, MBBS & DPM & MRC, 20+ yrs of Exp | Best Psychiatrist | Psychiatrist Near Me | Adhd ",
+            address: "Apollo Children Hospitals Greams Road, 15, Shafee Mohammed Rd, Thousand Lights, Chennai, Tamil Nadu 600006",
+            coords: [13.062029464174408, 80.2525299674876],
+            contact: "09380199199"
+        }
+    ],
+    "Alwarpet": [
+        {
+            name: "The Mind Body Foundation - Counselling & Psychotherapy",
+            address: "16, Wescare Towers, Cenotaph Rd, Rathna Nagar, Teynampet, Chennai, Tamil Nadu 600018",
+            coords: [13.033966173523353, 80.24546440718596],
+            contact: "04449150000"
+        },
+        {
+            name: "Venkateshwara Hospital",
+            address: "36A, Pasumpon Muthuramalinga Thevar Rd, Nandanam Extension, Chennai, Tamil Nadu 600035",
+            coords: [13.03145757907689, 80.2433186400165],
+            contact: "04449150000"
+        },
+        {
+            name: "Buddhi Clinic",
+            address: "20/43, KB Dasan Rd, Seethamma Extension, Chennai, Tamil Nadu 600018",
+            coords: [13.037729017518654, 80.24889763465711],
+            contact: "09500010056"
+        },
+        {
+            name: "Feel & Heal Counselling Services",
+            address: "No.41, 23, Vandikaran St, Panneerselvam Nagar, West Mambalam, Chennai, Tamil Nadu 600033",
+            coords: [13.032544588148196, 80.2235037151256],
+            contact: "09940466123"
+        },
+        {
+            name: "Dr Abilasha Psychological Clinic",
+            address: "Old No: 39, New, No:22, Kutty St, opp. Sangeetha Hotel, Seetha Nagar, Nungambakkam, Chennai, Tamil Nadu 600034",
+            coords: [13.064664210132884, 80.24214515375205],
+            contact: "09884299604"
+        }
+    ],
+    "Sholinganallur": [
+        {
+            name: "Mrs. Muthulakshmi Psychologist & Relationship Counsellor",
+            address: "H402, Lancor Central Park East, Elcot Ave, Sholinganallur, Chennai, Tamil Nadu 600119",
+            coords: [12.898944601109806, 80.22290821405373],
+            contact: "08248432448"
+        },
+        {
+            name: "Psychologist Aysha",
+            address: "6F, Rams Ragashree Villas, Perunthalaivar Kamarajar Nagar, Chennai, Tamil Nadu 600096",
+            coords: [12.969722001800477, 80.23648578443884],
+            contact: "08939466053"
+        },
+        {
+            name: "Dr. Gopinath MD l CHENNAI MIND CLINIC",
+            address: "A8 - 1st Floor, Medavakkam Main Rd, above Kid Zone, Senthuran Colony, Madipakkam, Chennai, Tamil Nadu 600091",
+            coords: [12.969085566227587, 80.18860534581239],
+            contact: "08048039611"
+        },
+        {
+            name: "Mind & Behavioral Clinic",
+            address: "No:24, Bhagavantam St, T. Nagar, Chennai, Tamil Nadu 600017",
+            coords: [13.038986051903459, 80.23675199691998],
+            contact: "09840042265"
+        }
+
+    ],
+    "Coimbatore": [
+        {
+            name: "Mind’s Glück Psychology Service",
+            address: "1-A5, SN Towers, Om Sakthi Nagar, Bharathi Nagar, Ganapathy, Coimbatore, Tamil Nadu 641006",
+            coords: [11.230064301947905, 76.9181811081702],
+            contact: "09952320320"
+        },
+        {
+            name: "Srijan Best Psychological Counselling Services",
+            address: "Ground Floor, Landmark - Nr. to Tanishq Showroom, E Lokamanya St, R.S. Puram, Coimbatore, Tamil Nadu 641002",
+            coords: [11.208511550017983, 76.94015376398562],
+            contact: "08098725787"
+        },
+        {
+            name: "Psychologist",
+            address: "209, Thadagam Main Rd, Saibaba Colony, Coimbatore, Tamil Nadu 641013",
+            coords: [11.316259184245933, 76.90719478026249],
+            contact: "09845612389"
+        },
+        {
+            name: "Vazhikatti Mental Health Centre & Research Institute",
+            address: "79,80,81A, Nehru Street, Avinashi Rd, behind FUN Republic Mall, Peelamedu, Coimbatore, Tamil Nadu 641004",
+            coords: [11.316259184245933, 76.90719478026249],
+            contact: " 09842253053"
+        },
+        {
+            name: "Mathi's Mind Care Clinic",
+            address: "Main Gate, to, Link Rd, opp. to PSG Hospital, Periyar Nagar, Anna Nagar, Peelamedu, Coimbatore, Tamil Nadu 641004",
+            coords: [11.165401229035941, 76.95114009189334],
+            contact: "08300885575 "
+        }
+        ],
+        "Mount Road": [
+        {
+            name: "Psychologist Counseling Center || American Psychological Association – Member",
+            address: "Upstairs, Bus Stand, B-12, Second Floor, Paramount Park (Dr Plaza) - B Block Direct Upstairs, Velachery - Tambaram Main Rd, opposite to Saravana Stores Supreme Mobiles, near by Vijaya nagar, Chennai, Tamil Nadu 600042",
+            coords: [12.98242812958538, 80.22130222054555],
+            contact: "09786901830"
+        }
+    ],
+    "Vellore": [
+        {
+            name: "Mental Health Center",
+            address: "SH 9, near Police Quarters, Bagayam, Vellore, Tamil Nadu 632002",
+            coords: [12.877617865450269, 79.13370522547451],
+            contact: "04162284516"
+        },
+        {
+            name: "Ahana Hospitals - Gandhi Nagar Branch",
+            address: "11, Gandhi Nagar Cross St, Shenoy Nagar, Madurai, Tamil Nadu 625020",
+            coords: [9.926812282129877, 78.13714389087826],
+            contact: "09006006000"
+        },
+        {
+            name: "Selvasakthi Clinic - Mind Care",
+            address: "EB Office, No:6, Kottaiamman Street, Road, opposite to Old Katpadi, Old Katpadi, Chennai, Vellore,Tamil Nadu 632007",
+            coords: [12.972818359552425, 79.14709481235185],
+            contact: "08608603457"
+        }
+    ],
+    "Madurai": [
+        {
+            name: "Ahana Hospitals - KK Nagar Branch",
+            address: "No: 611, KK Nagar, Madurai, Tamil Nadu 625020",
+            coords: [9.937718495075869, 78.14495448322337],
+            contact: "09006006000"
+        },
+        {
+            name: "Ahana Hospitals - Gandhi Nagar Branch",
+            address: "11, Gandhi Nagar Cross St, Shenoy Nagar, Madurai, Tamil Nadu 625020",
+            coords: [9.926812282129877, 78.13714389087826],
+            contact: "09006006000"
+        },
+        {
+            name: "Blissfullmind Wellness Research Hospitals | Dr. Mohanavenkataraman | best psychiatrist",
+            address: "49, Ashok Nagar 3rd St, Kochadai, Madurai, Tamil Nadu 625016",
+            coords: [9.94095830142127, 78.08598269850572],
+            contact: "08190866665"
+        }
+    ],
+    "Avadi": [
+        {
+            name: "AGAM Anxiety Wellness Clinic",
+            address: "23, MCK Layout, 2nd Main Rd, Nolambur, Maduravoyal, Chennai, Tamil Nadu 600095",
+            coords: [13.080177218507618, 80.15709533132669],
+            contact: "09500328282"
+        },
+        {
+            name: ", Serene Life Hospital",
+            address: "No.15, 1 & 15/2, Service Rd, Metpar Nagar, Vanagaram, Chennai, Tamil Nadu 600095",
+            coords: [13.072819978636005, 80.15984191325023],
+            contact: "09940004145"
+        },
+        {
+            name: "Revamp Hospital",
+            address: "Door No: D-21, 1ST Floor, Madras Thiruvallur High Rd, Ambattur, Chennai, Tamil Nadu 600058",
+            coords: [13.115622659295084, 80.15915526776934],
+            contact: "08190866665"
+        }
+    ],
+    "Royapettah": [
+        {
+            name: "Shraddha Psychiatric Clinic",
+            address: "New, 32, Venkatakrishna Rd, Chennai, Tamil Nadu 600028",
+            coords: [13.038601294437068, 80.26283761726472],
+            contact: "09940240272"
+        },
+        {
+            name: "CHENNAI MINDS -Best Psychiatrist in Chennai and Insomnia Treatment in Chennai",
+            address: "139, Plot C, 5th St, MCN Nagar, Thoraipakkam, Tamil Nadu 600097",
+            coords: [12.961660957770437, 80.2367450889909],
+            contact: "09677004220"
+        },
+        {
+            name: "Doc Gautham's Neuro Centre - We Re-Mind Your Brain",
+            address: "4/68, Pachaiappas College Hostel Rd, near Ega Theatre, Dasspuram, Chetpet, Chennai, Tamil Nadu 600031",
+            coords: [13.090104506300761, 80.23399850706741],
+            contact: " 09566133660"
+        }
+    ],
+    "Guindy": [
+        {
+            name: "Shraddha Psychiatric Clinic",
+            address: "Dr.Abinayaa Arasu .Depression , Insomnia,Alcohol Deaddiction treatment ,Home visit by Psychiatrist , Psychiatrist in Chennai",
+            coords: [13.038496309792562, 80.22644428866147],
+            contact: "09943066322"
+        },
+        {
+            name: "CareMe Health",
+            address: "D307, D Block 3rd, IITM RESEARCH PARK, Kanagam Rd, Kanagam, Tharamani, Chennai, Tamil Nadu 600113",
+            coords: [13.008392050128947, 80.23949055279836],
+            contact: "07829002002"
+        }
+    ],
+    "Krishnagiri": [
+        {
+            name: "BODHI HOSPITAL",
+            address: "TNHB, Phase, 1, Rayakottai Rd, near Kalaignar Statue, Flyover, Wahab Nagar, Krishnagiri, Tamil Nadu 635001",
+            coords: [12.529713606571235, 78.20537987651241],
+            contact: "09123511773"
+        },
+        {
+            name: "KAVITHALAYAA COUNSELING CENTRE",
+            address: ", 18, 1st St, Samdharya Nagar, Ambattur, Chennai, Tamil Nadu 600053",
+            coords: [13.115135881179835, 80.15715780340498, ],
+            contact: " 09962346966"
+        },
+    ],
+    "Ambattur": [
+        {
+            name: "Flamingo Healthcare Centre",
+            address: "FLAMINGO HEALTHCARE CENTRE, : 43, Ambattur Red Hills Rd, Vinayagapuram, Ambattur, Chennai, Tamil Nadu 600053",
+            coords: [13.129011742338795, 80.15286626914944],
+            contact: "04426582424"
+        },
+        {
+            name: "KAVITHALAYAA COUNSELING CENTRE",
+            address: "18, 1st St, Samdharya Nagar, Ambattur, Chennai, Tamil Nadu 600053",
+            coords: [13.115135881179835, 80.15715780340498],
+            contact: " 09962346966"
+        },
+        {
+            name: "Emocare (Counseling,Life Coaching and Training)",
+            address: "19/4, Shop St, Venkatapuram, Ambattur, Chennai, Tamil Nadu 600053",
+            coords: [13.120820063603265, 80.15200796229833],
+            contact: "07010702114"
+        }
+    ]
+
+
+
+
+        };
+
+        // Initialize Leaflet Map
+        function initMap() {
+            map = L.map('map').setView([12.933019283239336, 80.11056230306104], 13);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+        }
+
+        // Function to update facilities dropdown based on the selected location
+        function updateFacilities() {
+            const location = document.getElementById("location").value;
+            const facilitySelect = document.getElementById("facility");
+
+            // Clear existing options
+            facilitySelect.innerHTML = '<option value="">-- Select Facility --</option>';
+            clearMarkers();
+
+            // Populate facilities dropdown if a location is selected
+            if (location && facilitiesData[location]) {
+                facilitiesData[location].forEach((facility, index) => {
+                    const option = document.createElement("option");
+                    option.value = index;
+                    option.textContent = facility.name;
+                    facilitySelect.appendChild(option);
+                });
+            }
+        }
+
+        // Function to clear existing markers from the map
+        function clearMarkers() {
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+        }
+
+        // Function to show the selected facility on the map
+        function showMap() {
+            const location = document.getElementById("location").value;
+            const facilityIndex = document.getElementById("facility").value;
+
+            if (location && facilityIndex !== "") {
+                const selectedFacility = facilitiesData[location][facilityIndex];
+
+                // Clear existing markers
+                clearMarkers();
+
+                // Add a new marker for the selected facility
+                const marker = L.marker(selectedFacility.coords).addTo(map)
+                    .bindPopup(`<h3>${selectedFacility.name}</h3>
+                                <p>${selectedFacility.address}</p>
+                                <p>Contact: ${selectedFacility.contact}</p>`)
+                    .openPopup();
+
+                markers.push(marker);
+
+                // Center the map on the selected facility
+                map.setView(selectedFacility.coords, 15);
+            } else {
+                alert("Please select a facility to view on the map.");
+            }
+        }
+
+        // Initialize map on page load
+        window.onload = initMap;
+    </script>
+</body>
+
+</html>
+
+

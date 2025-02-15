@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Care Tips</title>
+    <link rel="stylesheet" href="/static/styless/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('index_page') }}", class="logo">CalmConnect</a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="{{ url_for('index_page') }}">HOME</a></li>
+                    <li><a href="{{ url_for('resources_page') }}">RESOURCES</a></li>
+                    <!-- Add more navigation links as needed -->
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </header>
+    
+    <section class="self-care-challenge">
+        <h1>7-Day Self-Care Challenge</h1>
+        <p>Welcome to your 7-day self-care journey! Each day, you’ll unlock a new activity to boost your well-being. Let’s get started!</p>
+        
+        <div class="challenge-day">
+            <h2>Day 1: Meditate for 10 Minutes</h2>
+            <p>Start your challenge by practicing a simple 10-minute meditation to calm your mind.</p>
+            <audio controls>
+                <source src="/static/images/20240926_121359981_1.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    
+        <div class="challenge-day">
+            <h2>Day 2: Take a Nature Walk</h2>
+            <p>Step outside and connect with nature. A 20-minute walk outdoors can significantly reduce stress.</p>
+        </div>
+    
+        <div class="challenge-day">
+            <h2>Day 3: Journal Your Thoughts</h2>
+            <p>Write down your thoughts and feelings today. Reflecting on your day can help clarify your mind.</p>
+        </div>
+    
+        <div class="challenge-day">
+            <h2>Day 4: Practice Gratitude</h2>
+            <p>Write down 3 things you're grateful for today. Gratitude can shift your perspective to focus on the positive.</p>
+        </div>
+    
+        <div class="challenge-day">
+            <h2>Day 5: Digital Detox</h2>
+            <p>Take a break from screens for a few hours. Use this time to read a book, cook a meal, or enjoy a hobby.</p>
+        </div>
+    
+        <div class="challenge-day">
+            <h2>Day 6: Stretch and Breathe</h2>
+            <p>Do some light stretching exercises combined with deep breathing to relax your body.</p>
+            <a href="{{ url_for('day6_exercises_page') }}" >View Stretching Exercises</a>
+
+        </div>
+    
+        <div class="challenge-day">
+            <h2>Day 7: Treat Yourself</h2>
+            <p>Celebrate your self-care journey by doing something that makes you happy. It could be a nice meal, a warm bath, or a fun activity.</p>
+        </div>
+    
+        <div class="progress-tracker">
+            <h3>Track Your Progress</h3>
+            <p>Keep a journal or use our online self-care tracker to note how you feel at the end of each day.</p>
+            <a href="{{ url_for('progress_tracker_page') }}" class="challenge-btn">Progress Tracker</a>
+
+        </div>
+    </section>
+    
+    </body>
+    </html>
+
+
+
+
+
+
+
+
+
